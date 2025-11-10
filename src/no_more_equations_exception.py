@@ -1,0 +1,2 @@
+class NoMoreEquationsException(Exception):
+    pass
