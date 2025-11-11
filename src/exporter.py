@@ -23,7 +23,7 @@ class Exporter:
     def show_graph(self):
         """Save graph as a .png file, then display it for user"""
         _, ax = plt.subplots(figsize=(10, 8))
-        nx.draw(self.solution.graph, pos=self.dag_layout(self.solution.graph), with_labels=True, labels=self.solution.labels, arrows=True)
+        nx.draw(self.solution.graph, pos=self.dag_layout(self.solution.graph), with_labels=True, labels=self.solution.labels, arrows=True, font_color="white")
         ax.set_title(f"Dependency graph for {self.solution.file_name}") 
         plt.savefig(f"output/{self.solution.file_name}/{self.solution.file_name}.png")
         if not self.solution.test:

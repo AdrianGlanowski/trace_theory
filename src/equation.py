@@ -10,6 +10,7 @@ class Equation:
         self.left = values[1]
         self.right = values[2]
 
+    
     def parse(self, line: str):
         """ Parser for .txt file input.
             Format of said file in regex-like interpretation:

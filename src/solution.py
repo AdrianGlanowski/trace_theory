@@ -27,7 +27,7 @@ class Solution:
             or
                 two equations try to modify the same variable.
 
-            The dependency relation is symmetrical (but symmetric pairs are not stored).
+            The dependency relation is symmetrical.
         """
         self.dependent = []
         for eq1 in self.equations:
@@ -43,8 +43,8 @@ class Solution:
         """ 
             Create independency relation I. 
             Two equations are in relation if they do not depend on each other
-            I = Sigma* - D (Sigma is all the pairs (x, y) of equations where x is defined before y)
-            The dependency relation is symmetrical (but symmetric pairs are not stored).
+            I = Sigma* - D (Sigma is all the pairs (x, y) of equations)
+            The independency relation is symmetrical.
         """
         
         self.independent = [(eq1, eq2) 
