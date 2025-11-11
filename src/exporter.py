@@ -26,7 +26,8 @@ class Exporter:
         nx.draw(self.solution.graph, pos=self.dag_layout(self.solution.graph), with_labels=True, labels=self.solution.labels, arrows=True)
         ax.set_title(f"Dependency graph for {self.solution.file_name}") 
         plt.savefig(f"output/{self.solution.file_name}/{self.solution.file_name}.png")
-        plt.show()
+        if not self.solution.test:
+            plt.show()
 
     def graph_dot_format(self):
         """Convert graph to dot format"""
@@ -54,5 +55,5 @@ class Exporter:
             #graph
             f.write(self.graph_dot_format())
             f.close()
-
+        
         self.show_graph()

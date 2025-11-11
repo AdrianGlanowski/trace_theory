@@ -1,5 +1,5 @@
-D = {(a, a), (a, b), (a, c), (b, b), (b, d), (c, c), (c, d), (d, d)}
-I = {(a, d), (b, c)}
+D = {(a, a), (a, b), (a, c), (b, a), (b, b), (b, d), (c, a), (c, c), (c, d), (d, b), (d, c), (d, d)}
+I = {(a, d), (b, c), (c, b), (d, a)}
 FNF(baadcb) = (b)(ad)(a)(cb)
 digraph g{
 1 -> 2
