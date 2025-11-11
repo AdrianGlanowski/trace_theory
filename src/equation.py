@@ -11,6 +11,23 @@ class Equation:
         self.right = values[2]
 
     def parse(self, line: str):
+        """ Parser for .txt file input.
+            Format of said file in regex-like interpretation:
+            (action_1) left_1 := right_1
+            ...
+            (action_n) left_n := right_n
+            A = {action_1, action_2, ..., action_n}
+            w = [action_1, action_2, ..., action_n]+
+
+            where left_i is variable name
+            and right_i is a series of variables multiplied by numbers, 
+            serpated by basic mathematical operator.
+            
+            When the NoMoreEquationsException is raised, 
+            that means A = {action_1, action_2, ..., action_n},
+            so another line is read to aquire word w.
+        """
+
         line = line.replace(" ", "")
         variable = r"[a-z]"
         multiplied_variable = fr"\d*{variable}"
@@ -30,9 +47,6 @@ class Equation:
             variable_list.append(char)
 
         return dict_val["action"], dict_val["left"], variable_list
-
-    def full_repr(self):
-        return f"({self.action}) {self.left} := {self.right}"
 
     def __repr__(self):
         return f"{self.action}"

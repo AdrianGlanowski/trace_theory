@@ -1,6 +1,6 @@
 D = {(a, a), (a, c), (a, f), (b, b), (b, e), (c, c), (c, e), (c, f), (d, d), (d, f), (e, e), (f, f)}
 I = {(a, b), (a, d), (a, e), (b, c), (b, d), (b, f), (c, d), (d, e), (e, f)}
-FNF(acdcfbbe) = (adb)(cb)(c)(fe)
+FNF(acdcfbbe) = <bound method Exporter.fnf_string_format of <exporter.Exporter object at 0x0000020164731FA0>>
 digraph g{
 1 -> 2
 2 -> 4

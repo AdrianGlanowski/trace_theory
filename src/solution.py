@@ -19,6 +19,15 @@ class Solution:
         self.word = word
     
     def create_dependency_relation(self):
+        """ 
+            Create dependency relation D. 
+            Two equations are in relation if
+                one equation tries to modify variable, while the other one is reading said variable
+            or
+                two equations try to modify the same variable.
+
+            The dependency relation is symmetrical (but symmetric pairs are not stored).
+        """
         self.dependent = []
         for i in range(len(self.equations)):
             for j in range(i, len(self.equations)):
@@ -32,12 +41,25 @@ class Solution:
                     self.dependent.append((eq1, eq2))
         
     def create_independency_relation(self):
+        """ 
+            Create independency relation I. 
+            Two equations are in relation if they do not depend on each other
+            I = Sigma* - D (Sigma is all the pairs (x, y) of equations where x is defined before y)
+            The dependency relation is symmetrical (but symmetric pairs are not stored).
+        """
+        
         self.independent = [(self.equations[i], self.equations[j]) 
                             for i in range(len(self.equations)) 
                                 for j in range(i+1, len(self.equations)) 
                                     if (self.equations[i], self.equations[j]) not in self.dependent]
 
     def create_graph(self):
+        """ 
+            Create dependency graph for word w.
+            The edge between w[i] and w[j] in the graph exist iff (w[i], w[j]) belongs in D. 
+            Redundant edges are ereased (redundancy is based on transitivity)
+        """
+
         edges = []
         for i in range(len(self.word)):
             for j in range(i+1, len(self.word)):
@@ -50,13 +72,16 @@ class Solution:
         self.labels = {i: w for i, w in enumerate(self.word)}
 
     def create_FNF(self):
+        """ 
+            Create Foata's Normal Form based on topological generations of a graph.
+        """
         self.topology = list(nx.topological_generations(self.graph))
 
-        topology_layer = ["".join(map(lambda x: self.word[x], array)) for array in self.topology]
-        all_layers = [f"({"".join(x)})" for x in topology_layer]
-        self.fnf_string = "".join(all_layers)
-
+        
     def solve(self):
+        """
+            Solve the problem using already defined functions.
+        """
         self.create_dependency_relation()
         self.create_independency_relation()
         self.create_graph()
@@ -64,6 +89,9 @@ class Solution:
         self.export_results()
         
     def export_results(self):
+        """
+            Export results to output files.
+        """
         exporter = Exporter(self)
         exporter.export_results()
             
