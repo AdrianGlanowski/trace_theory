@@ -4,7 +4,7 @@ from equation import Equation
 from exporter import Exporter
 
 class Solution:
-    def __init__(self, file_name):
+    def __init__(self, file_name, test=False):
         self.file_name = file_name
         self.equations = []
         with open(f"examples/{file_name}.txt", "r") as f:
@@ -17,6 +17,7 @@ class Solution:
                     break
                 
         self.word = word
+        self.test = test
     
     def create_dependency_relation(self):
         """ 
@@ -29,15 +30,13 @@ class Solution:
             The dependency relation is symmetrical (but symmetric pairs are not stored).
         """
         self.dependent = []
-        for i in range(len(self.equations)):
-            for j in range(i, len(self.equations)):
-                eq1 = self.equations[i]
-                eq2 = self.equations[j]
+        for eq1 in self.equations:
+            for eq2 in self.equations:
                 
                 eq1_all_variables = set(eq1.left) | set(eq1.right)
                 eq2_all_variables = set(eq2.left) | set(eq2.right)
                 
-                if self.equations[i].left in eq2_all_variables or self.equations[j].left in eq1_all_variables:
+                if eq1.left in eq2_all_variables or eq2.left in eq1_all_variables:
                     self.dependent.append((eq1, eq2))
         
     def create_independency_relation(self):
@@ -48,10 +47,10 @@ class Solution:
             The dependency relation is symmetrical (but symmetric pairs are not stored).
         """
         
-        self.independent = [(self.equations[i], self.equations[j]) 
-                            for i in range(len(self.equations)) 
-                                for j in range(i+1, len(self.equations)) 
-                                    if (self.equations[i], self.equations[j]) not in self.dependent]
+        self.independent = [(eq1, eq2) 
+                            for eq1 in self.equations 
+                                for eq2 in self.equations
+                                    if (eq1, eq2) not in self.dependent]
 
     def create_graph(self):
         """ 
@@ -63,7 +62,7 @@ class Solution:
         edges = []
         for i in range(len(self.word)):
             for j in range(i+1, len(self.word)):
-                if (self.word[i], self.word[j]) in map(lambda x: (x[0].action, x[1].action), self.dependent) or (self.word[j], self.word[i]) in map(lambda x: (x[0].action, x[1].action), self.dependent):
+                if (self.word[i], self.word[j]) in map(lambda x: (x[0].action, x[1].action), self.dependent):
                     edges.append((i, j))
 
         #reduction of pointless edges based on transitivity of dependency relation
